@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run RanpakMaintApp-RanpakMaintApp",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/RanpakMaintApp/index.html"
+      ],
+      "cwd": "${workspaceFolder}/RanpakMaintApp",
+      "env": {
+        "PORT": "6004",
+        "MOCK_LOOKUP_DIRS": "[\".\"]",
+        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/RanpakMaintApp/RanpakMaintApp\"}"
+      },
+      "envFile": "${workspaceFolder}/RanpakMaintApp/.env1",
+      "preLaunchTask": "Build RanpakMaintApp"
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+_schema-version: "3.2"
+ID: RanpakMaintApp
+version: 0.0.1
+modules:
+- name: RanpakMaintApp-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: RanpakMaintApp-destination-service
+    parameters:
+      content-target: true
+  - name: RanpakMaintApp_html_repo_host
+    parameters:
+      service-key:
+        name: RanpakMaintApp_html_repo_host-key
+  - name: uaa_RanpakMaintApp
+    parameters:
+      service-key:
+        name: uaa_RanpakMaintApp-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: RanpakMainApp_RanpakMaintApp_html_repo_host
+          ServiceInstanceName: RanpakMaintApp-html5-app-host-service
+          ServiceKeyName: RanpakMaintApp_html_repo_host-key
+          sap.cloud.service: RanpakMainApp
+        - Authentication: OAuth2UserTokenExchange
+          Name: RanpakMainApp_uaa_RanpakMaintApp
+          ServiceInstanceName: RanpakMaintApp-xsuaa-service
+          ServiceKeyName: uaa_RanpakMaintApp-key
+          sap.cloud.service: RanpakMainApp
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: RanpakMaintApp_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: RanpakMaintApp_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - RanpakMaintApp-content.zip
+      name: RanpakMaintApp
+      target-path: resources/
+- name: RanpakMaintApp
+  type: html5
+  path: RanpakMaintApp
+  build-parameters:
+    builder: custom
+    commands:
+    - npm install
+    - npm run build
+    supported-platforms: []
+resources:
+- name: RanpakMaintApp-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: RanpakMaintApp-destination-service
+    service-plan: lite
+- name: RanpakMaintApp_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: RanpakMaintApp-html5-app-host-service
+    service-plan: app-host
+- name: uaa_RanpakMaintApp
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: RanpakMaintApp-xsuaa-service
+    service-plan: application
