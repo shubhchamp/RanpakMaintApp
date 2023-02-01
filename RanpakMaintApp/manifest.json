@@ -5,7 +5,24 @@
     "type": "application",
     "applicationVersion": {
       "version": "1.0.0"
-    }
+    },
+    "title": "Ranpak Maint",
+    "description": "Ranpak Maint",
+    "crossNavigation": {
+      "inbounds": {
+          "RanpakMaint": {
+              "signature": {
+                  "parameters": {},
+                  "additionalParameters": "allowed"
+              },
+              "semanticObject": "RanpakMaint",
+              "action": "Display",
+              "title": "Ranpak Maint",
+              "subTitle": "Ranpak Maint",
+              "icon": ""
+          }
+      }
+  }
   },
   "sap.ui": {
     "technology": "URL"
